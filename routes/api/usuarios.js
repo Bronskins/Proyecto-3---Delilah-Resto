@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Pedidos } = require('../../conexion')
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const { checkToken, isAdmin } = require('../../middlewares/checkToken')
@@ -32,16 +33,39 @@ const { checkToken, isAdmin } = require('../../middlewares/checkToken')
 
 // METODO GET: Mostrar Usuarios (http://localhost:3000/v1/api/usuarios)
 router.get('/', checkToken, async (request, response) => {
-    // select * from usuarios
-    const users = await User.findAll({ 
-         include: [
-            {
-                model: Pedidos,
-                as: "Pedidos"
-            }
-        ] 
+
+    let userToken = request.headers['user-token']
+    
+    let payload = {};
+
+    payload = await jwt.decode(userToken, {complete: true});
+    
+    let user = await User.findOne({
+        where: {usuario: payload.payload.usuario}
     })
-    response.send(users);
+
+    console.log(user.roles)
+    
+    if (user.roles == "admin") {
+        const users = await User.findAll({ 
+            include: [
+               {
+                   model: Pedidos,
+                   as: "Pedidos"
+               }
+           ] 
+       })
+       response.send(users);
+    
+    } else {
+        const usuarios = await User.findAll({
+            where: { id_usuarios: user.id_usuarios}
+        })
+
+        response.send(usuarios)
+    }
+    // select * from usuarios
+
 })
 
 // METODO POST: Crear Nuevo Usuario (http://localhost:3000/v1/api/usuarios)

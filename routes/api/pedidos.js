@@ -28,26 +28,49 @@ const jwt = require('jsonwebtoken');
 
 router.get('/', checkToken , async (request, response) => {
     // select * from productos
-    const productos = await Pedidos.findAll({ 
-        attributes: { exclude: ["createdAt", "updatedAt", "id_usuarios"] },
-        include: [
-            {
-                model: User,
-                as: "Usuario",
-                attributes: ["id_usuarios", "nombreCompleto", "direccion", "email"]
-            },
-            {
-                model: Productos,
-                as: "Productos",
-                attributes: { exclude: ["createdAt", "updatedAt"] },
-                through: {
-                attributes: []
+
+    let userToken = request.headers['user-token']
+    
+    let payload = {};
+
+    payload = await jwt.decode(userToken, {complete: true});
+    
+    let user = await User.findOne({
+        where: {usuario: payload.payload.usuario}
+    })
+
+    console.log(user.roles)
+    
+    if (user.roles == "admin") {
+        const productos = await Pedidos.findAll({ 
+            attributes: { exclude: ["createdAt", "updatedAt", "id_usuarios"] },
+            include: [
+                {
+                    model: User,
+                    as: "Usuario",
+                    attributes: ["id_usuarios", "nombreCompleto", "direccion", "email"]
+                },
+                {
+                    model: Productos,
+                    as: "Productos",
+                    attributes: { exclude: ["createdAt", "updatedAt"] },
+                    through: {
+                    attributes: []
+                    }
                 }
-            }
-        ]
+            ]
+        }
+        );
+        response.send(productos)
+    } else {
+        const products = await Pedidos.findAll({
+            where: { id_usuarios: user.id_usuarios}
+        })
+
+        response.send(products)
     }
-    );
-    response.send(productos);
+
+ 
 })
 
 // METODO POST: Crear Nuevo Pedido (http://localhost:3000/v1/api/pedidos)
