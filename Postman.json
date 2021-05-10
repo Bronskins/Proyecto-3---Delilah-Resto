@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "993263b8-1170-4d9f-9e66-5a5191392b96",
+		"name": "Proyecto 3 - Delilah Resto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "POST: Crear PRODUCTO",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDk2NzAxfQ.vqPPNxnP-yyagXV68YUgsFnOXaJL1xW-MYmzOjvrnQc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Combo Hamburguesa Triple\",\r\n    \"precio\": 750\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET: Ver PRODUCTO",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NTAwMDQ2fQ.Fb4pGnAYqVCVTf-EQkAeWAObo_pES0M1MDj__sFodYw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/productos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: Actualizar PRODUCTO",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDk2NzAxfQ.vqPPNxnP-yyagXV68YUgsFnOXaJL1xW-MYmzOjvrnQc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Nuggets De Pollo\",\r\n    \"precio\": 450,\r\n    \"descripcion\": \"12 unidades de Nuggets de pollo.\",\r\n    \"createdAt\": \"2000-04-01\",\r\n    \"updatedAt\": \"2000-04-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/productos/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"productos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: Borrar PRODUCTO",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDk2NzAxfQ.vqPPNxnP-yyagXV68YUgsFnOXaJL1xW-MYmzOjvrnQc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/productos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"productos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "GET: Ver USUARIOS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NTQ3MjMzfQ.pA71R77UC1SqTIrqSF6EmJEcfi1MoWtoYT4rx-zYU-s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: Borrar USUARIO",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDY2NTkxfQ.n_YqQwByj24x2LNfdIvcP9M-xafnbSP2jFIcJuCaWkc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/usuarios/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST: Crear USUARIO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuario\": \"test-user\",\r\n    \"nombreCompleto\": \"Test User\",\r\n    \"direccion\": \"Av. Test Street 123\",\r\n    \"contraseña\": \"test-password\",\r\n    \"email\": \"test-user@test.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: Actualizar USUARIO",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDk2NzAxfQ.vqPPNxnP-yyagXV68YUgsFnOXaJL1xW-MYmzOjvrnQc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/usuarios/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "GET: Ver PEDIDOS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDY2NTkxfQ.n_YqQwByj24x2LNfdIvcP9M-xafnbSP2jFIcJuCaWkc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: Borrar PEDIDO",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjIwNjcyMTY5fQ.97jYQtMI95gGkBEoWfBvL2sZbyAdRHXSGR8qjjpKgjI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/pedidos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"pedidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT: Actualizar PEDIDO",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDY2NTkxfQ.n_YqQwByj24x2LNfdIvcP9M-xafnbSP2jFIcJuCaWkc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"estado\": \"El repartidor esta esperando tu pedido.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/pedidos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"pedidos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST: Crear PEDIDO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"tipoDePago\": \"Efectivo\",\r\n\"estado\": \"En preparacion\",\r\n\"id_productos\": [1,2,3],\r\n\"descripcion\": \"Nuevo pedido.\",\r\n\"pago\": 300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST: Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "user-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjIwNjE5NjM5fQ.B3FQ3GHi0kAqWH34REFIgeFA0MMe0eOctuS5H8n7OlI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": \"Bronskins\",\r\n    \"contraseña\": \"capo9090\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
