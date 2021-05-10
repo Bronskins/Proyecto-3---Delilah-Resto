@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const { User } = require('../conexion')
 
-const isAdmin = async (request, response, next) => {
+const checkToken = async (request, response, next) => {
     
     let userToken = request.headers['user-token']
 
@@ -12,20 +12,12 @@ const isAdmin = async (request, response, next) => {
 
     let payload = {};
 
+    payload = await jwt.decode(userToken, {complete: true});
+
     try 
     {
         if(payload.expireAt < moment().unix) {
             return response.json({ error: 'El token ha expirado'});
-        }
-
-        payload = await jwt.decode(userToken, {complete: true});
-   
-        let user = await User.findOne({
-            where: {usuario: payload.payload.usuario}
-        })
-
-        if (user.roles != "admin") {
-            return response.json( { error: "No tienes permisos suficientes."})
         } else {
             next();
         }
@@ -37,4 +29,25 @@ const isAdmin = async (request, response, next) => {
     }
 }
 
-module.exports = { isAdmin }
+const isAdmin = async (request, response, next) => {
+
+    let userToken = request.headers['user-token']
+    
+    let payload = {};
+
+    payload = await jwt.decode(userToken, {complete: true});
+    
+    let user = await User.findOne({
+        where: {usuario: payload.payload.usuario}
+    })
+    
+    if (user.roles != "admin") {
+        return response.json( { error: "No tienes permisos suficientes."})
+    } else {
+        next();
+    }
+}
+
+
+module.exports = { checkToken, isAdmin }
+

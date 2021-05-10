@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const { Pedidos, User, Productos, ProductoPedido } = require('../../conexion')
-const middlewares = require('../../middlewares/checkToken')
+const { checkToken, isAdmin} = require('../../middlewares/checkToken')
 const { check, validationResult } = require('express-validator');
-const pedidos = require('../../models/pedidos');
 const jwt = require('jsonwebtoken');
 
 /**
@@ -27,7 +26,7 @@ const jwt = require('jsonwebtoken');
 
 // METODO GET: Mostrar Pedidos (http://localhost:3000/v1/api/pedidos)
 
-router.get('/', middlewares.isAdmin, async (request, response) => {
+router.get('/', checkToken , async (request, response) => {
     // select * from productos
     const productos = await Pedidos.findAll({ 
         attributes: { exclude: ["createdAt", "updatedAt", "id_usuarios"] },
@@ -52,10 +51,10 @@ router.get('/', middlewares.isAdmin, async (request, response) => {
 })
 
 // METODO POST: Crear Nuevo Pedido (http://localhost:3000/v1/api/pedidos)
-router.post('/',middlewares.isAdmin, [
+router.post('/', [
     check('tipoDePago', "El tipo de pago es obligatorio.").not().isEmpty(),
     check("id_productos", "El array de productos es obligatorio.").not().isEmpty()
-], async (request, response) => {
+], checkToken, async (request, response) => {
     const errors = validationResult(request);
 
     if (!errors.isEmpty()) {
@@ -138,7 +137,7 @@ router.post('/',middlewares.isAdmin, [
 })
 
 // METODO DELETE: Borrar Un Pedido (http://localhost:3000/v1/api/pedidos/:id)
-router.delete('/:id', middlewares.isAdmin, async (request, response) => {
+router.delete('/:id', checkToken, isAdmin, async (request, response) => {
     await Pedidos.destroy({
         where: { id_pedidos: request.params.id}
     })
@@ -146,9 +145,9 @@ router.delete('/:id', middlewares.isAdmin, async (request, response) => {
 })
 
 // METODO PUT: Actualizar Un Pedido (http://localhost:3000/pedidos/:id)
-router.put('/:id', middlewares.isAdmin, async (request, response) => {
+router.put('/:id', checkToken, isAdmin, async (request, response) => {
     await Pedidos.update(request.body, {
-        where: { id: request.params.id }
+        where: { id_pedidos: request.params.id }
     });
     response.json({ success: "Pedido actualizado."})
 })

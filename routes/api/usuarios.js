@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { User, Pedidos } = require('../../conexion')
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
-const middlewares = require('../../middlewares/checkToken')
+const { checkToken, isAdmin } = require('../../middlewares/checkToken')
 
 /**
  * @swagger
@@ -31,7 +31,7 @@ const middlewares = require('../../middlewares/checkToken')
 */
 
 // METODO GET: Mostrar Usuarios (http://localhost:3000/v1/api/usuarios)
-router.get('/', middlewares.isAdmin, async (request, response) => {
+router.get('/', checkToken, async (request, response) => {
     // select * from usuarios
     const users = await User.findAll({ 
          include: [
@@ -48,7 +48,6 @@ router.get('/', middlewares.isAdmin, async (request, response) => {
 router.post('/', [
     check("usuario", "El usuario es obligatorio").not().isEmpty(),
     check("contraseña", "El password es obligatorio").not().isEmpty(),
-    check('roles', "El rol es obligatorio").not().isEmpty(),
     check("email", "El email es obligatorio").isEmail(),
     check("nombreCompleto", "El nombre completo es obligatorio").not().isEmpty(),
     check("direccion", "La direccion es obligatoria.").not().isEmpty()
@@ -60,22 +59,31 @@ router.post('/', [
         return response.status(404).json({ errores: errors.array() });
     }
     request.body.contraseña = bcrypt.hashSync(request.body.contraseña, 10);
-    const user = await User.create(request.body);
+
+    let userBody = {
+        usuario: request.body.usuario,
+        nombreCompleto: request.body.nombreCompleto,
+        direccion: request.body.direccion,
+        contraseña: request.body.contraseña,
+        email: request.body.email,
+        roles: "user"
+    }
+    const user = await User.create(userBody);
     response.json(user);
 })
 
 // METODO DELETE: Borrar Un Usuario (http://localhost:3000/v1/api/usuarios/:id)
-router.delete('/:id', middlewares.isAdmin, async (request, response) => {
+router.delete('/:id', checkToken, isAdmin, async (request, response) => {
     await User.destroy({
-        where: { id: request.params.id}
+        where: { id_usuarios: request.params.id}
     })
     response.json({ success: "Usuario eliminado."})
 })
 
 // METODO PUT: Actualizar Un Usuario (http://localhost:3000/usuarios/:id)
-router.put('/:id', middlewares.isAdmin, async (request, response) => {
+router.put('/:id', checkToken, isAdmin, async (request, response) => {
     await User.update(request.body, {
-        where: { id: request.params.id }
+        where: { id_usuarios: request.params.id }
     });
     response.json({ success: "Usuario actualizado."})
 })

@@ -9,7 +9,7 @@ const usuarios = require('./models/usuarios');
 
 // Conexion a la base de datos.
 
-const sequelize = new Sequelize("Proyecto3", "root", "reggina96969096p6",{
+const sequelize = new Sequelize("Proyecto3", "root", "acamica",{
     host: "localhost",
     dialect: "mysql"
 });
@@ -33,15 +33,17 @@ Productos.belongsToMany(Pedidos, {
     foreignKey: "id_productos"
 })
 
-User.hasMany(Pedidos,{
+User.hasMany(Pedidos, {
     as: "Pedidos",
-    foreignKey: "id_pedidos"
+    foreignKey: "id_usuarios"
 })
 
 Pedidos.belongsTo(User, {
     as: "Usuario",
     foreignKey: "id_usuarios"
 })
+
+
 /* User.associate = function(models){
     User.hasMany(models.Pedidos),
     {foreignKey: "id_pedidos", as: "pedidos"}

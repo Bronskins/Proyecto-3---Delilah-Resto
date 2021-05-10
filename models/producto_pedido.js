@@ -10,9 +10,6 @@ module.exports = (sequelize, type) => {
             type: type.INTEGER,
             primaryKey: true
         },
-        cantidad: {
-            type: type.INTEGER
-        },
         createdAt: {
             default: moment.unix(),
             type: type.DATE
