@@ -36,7 +36,8 @@ router.get('/', checkToken , async (request, response) => {
     payload = await jwt.decode(userToken, {complete: true});
     
     let user = await User.findOne({
-        where: {usuario: payload.payload.usuario}
+        where: {usuario: payload.payload.usuario},
+        
     })
 
     console.log(user.roles)
@@ -64,7 +65,23 @@ router.get('/', checkToken , async (request, response) => {
         response.send(productos)
     } else {
         const products = await Pedidos.findAll({
-            where: { id_usuarios: user.id_usuarios}
+            where: { id_usuarios: user.id_usuarios},
+            include: [
+                {
+                    model: User,
+                    as: "Usuario",
+                    attributes: ["id_usuarios", "nombreCompleto", "direccion", "email"]
+                },
+                {
+                    model: Productos,
+                    as: "Productos",
+                    attributes: { exclude: ["createdAt", "updatedAt"] },
+                    through: {
+                    attributes: []
+                    }
+                }
+            ]
+            
         })
 
         response.send(products)
@@ -147,12 +164,13 @@ router.post('/', [
 
     
     // CREACION PEDIDO_PRODUCTO
-
+    console.log(productos)
     productos.forEach(async (element) => {
         let producto = await ProductoPedido.create({
             id_pedidos: pedido.id_pedidos,
             id_productos: element
         })
+        console.log(producto)
     });
 
 
