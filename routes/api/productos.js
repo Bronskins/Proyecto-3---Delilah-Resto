@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Productos } = require('../../conexion')
 const { checkToken, isAdmin } = require('../../middlewares/checkToken')
+const { check, validationResult } = require('express-validator');
 
 /**
  * @swagger
@@ -30,7 +31,16 @@ router.get('/', checkToken, async (request, response) => {
 })
 
 // METODO POST: Crear Nuevo Producto (http://localhost:3000/v1/api/productos)
-router.post('/', checkToken, isAdmin, async (request, response) => {
+router.post('/',  [
+    check("nombre", "El nombre del producto es obligatorio").not().isEmpty(),
+    check("precio", "El precio del producto es obligatorio").not().isEmpty()
+], checkToken, isAdmin, async (request, response) => {
+    const errors = validationResult(request);
+
+    if (!errors.isEmpty()) {
+        return response.status(400).json({ errores: errors.array() });
+    }
+    
     const producto = await Productos.create(request.body);
     response.json(producto)
 })

@@ -81,7 +81,7 @@ router.post('/', [
     const errors = validationResult(request);
 
     if (!errors.isEmpty()) {
-        return response.status(404).json({ errores: errors.array() });
+        return response.status(400).json({ errores: errors.array() });
     }
     
     let productos = request.body.id_productos

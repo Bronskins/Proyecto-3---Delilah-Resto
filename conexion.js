@@ -9,7 +9,7 @@ const usuarios = require('./models/usuarios');
 
 // Conexion a la base de datos.
 
-const sequelize = new Sequelize("Proyecto3", "root", "reggina96969096p6",{
+const sequelize = new Sequelize("Proyecto3", "root", "acamica",{
     host: "localhost",
     dialect: "mysql"
 });

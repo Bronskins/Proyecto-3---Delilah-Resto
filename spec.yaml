@@ -1,0 +1,535 @@
+swagger: '2.0'
+info:
+  description: >-
+    Este es el API para el Proyecto 3 - Delilah Resto. El mismo contiene
+    operaciones CRUD para las tablas de usuarios, productos, y pedidos. Un
+    usuario normal solo podra recibir y actualizar informacion propia, mientras
+    que un administrador podra ver y modificar todos los registros.
+  version: 1.0.0
+  title: Delilah Resto API
+  contact:
+    email: bronskins@hotmail.com
+host: 'localhost:3000'
+basePath: /api/v1
+tags:
+  - name: pedidos
+    description: 'Obtener, crear, modificar o eliminar pedidos.'
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: usuarios
+    description: 'Obtener, crear, modificar o eliminar usuarios.'
+  - name: productos
+    description: Obtener, crear, modificar o eliminar productos.
+  - name: login
+    description: Endpoint de autenticacion del usuario.
+schemes:
+  - http
+paths:
+  /pedidos:
+    get:
+      tags:
+        - pedidos
+      summary: Obtener todos los pedidos
+      description: >-
+        Este es el endpoint para ver todos los pedidos existentes. Un usuario
+        solo podra recibir los propios, mientras que un administrador recibira
+        todos.
+      operationId: obtenerPedido
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacion exitosa
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id_pedidos:
+                  type: integer
+                  format: int64
+                estado:
+                  type: string
+                descripcion:
+                  type: string
+                pago:
+                  type: integer
+                  format: int64
+                tipoDePago:
+                  type: string
+                Usuario:
+                  type: object
+                  properties:
+                    id_usuarios:
+                      type: integer
+                      format: int64
+                    nombreCompleto:
+                      type: string
+                    direccion:
+                      type: string
+                    email:
+                      type: string
+                Productos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id_productos:
+                        type: integer
+                        format: int64
+                      nombre:
+                        type: string
+                      precio:
+                        type: integer
+                        format: int64
+    post:
+      tags:
+        - pedidos
+      summary: Crear un nuevo pedido
+      description: >-
+        Este es el endpoint para crear un nuevo pedido. Los valores necesarios
+        en el body es un array de productos (id_productos) y el tipo de pago, es
+        decir, efectivo o tarjeta (tipoDePago)
+      operationId: crearPedido
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto del pedido a crear
+          required: true
+          schema:
+            $ref: '#/definitions/Pedidos'
+      responses:
+        '200':
+          description: Todo OK.
+        '400':
+          description: Bad Request. Falta el JWT Token o algun valor dentro del body.
+  /pedidos/{idPedido}:
+    delete:
+      tags:
+        - pedidos
+      summary: Borrar un pedido existente
+      description: >-
+        Este es el endpoint para eliminar un pedido existente. Solo un
+        administrador podra ejecutar este endpoint.
+      operationId: borrarPedido
+      produces:
+        - application/json
+      parameters:
+        - name: idPedido
+          in: path
+          description: El ID del pedido existente
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Operacion exitosa.
+          schema:
+            type: object
+            properties:
+              success:
+                type: string
+    put:
+      tags:
+        - pedidos
+      summary: Actualizar un pedido existente
+      description: >-
+        Este es el endpoint para actualizar un pedido ya existente. Toma el ID
+        de un pedido ya existente para cambiar cualquiera de los valores. Solo
+        los administradores pueden ejecutar este endpoint.
+      operationId: actualizarPedido
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: idPedido
+          required: true
+          type: integer
+          description: ID del pedido ya existente
+        - in: body
+          name: body
+          description: Objeto del pedido a actualizar.
+          schema:
+            $ref: '#/definitions/Pedidos'
+      responses:
+        '200':
+          description: Operacion exitosa
+          schema:
+            type: "object"
+            properties:
+              success:
+                type: "string"
+  /usuarios:
+    get:
+      tags:
+        - usuarios
+      summary: Obtener usuarios
+      description: >-
+        Con este endpoint se obtiene los usuarios. Un usuario normal solo
+        recibira informacion propia mientras que un administrador vera todos los
+        usuarios.
+      operationId: verUsuario
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Operacion Exitosa
+          schema:
+            $ref: '#/definitions/Usuarios'
+    post:
+      tags:
+        - usuarios
+      summary: Crear un nuevo usuario.
+      description: >-
+        Con este endpoint se creara un nuevo usuario sin permisos de
+        administrador. 
+      operationId: crearUsuario
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto del usuario a crear.
+          required: true
+          schema:
+            type: object
+            properties:
+              usuario:
+                type: string
+              nombreCompleto:
+                type: string
+              direccion:
+                type: string
+              contraseña:
+                type: string
+              email:
+                type: string
+      responses:
+        '200':
+          description: Operacion exitosa
+          schema:
+            type: object
+            properties:
+              id_usuarios:
+                type: integer
+                format: int64
+              usuario:
+                type: string
+              email:
+                type: string
+              contraseña:
+                type: string
+              nombreCompleto:
+                type: string
+              direccion:
+                type: string
+              roles:
+                type: string
+              createdAt:
+                type: string
+              updatedAt:
+                type: string
+        '400':
+          description: Algun valor faltante dentro del body
+  /usuarios/{idUsuario}:
+    put:
+      tags:
+        - usuarios
+      summary: Actualizar un usuario existente
+      description: >-
+        Con este endpoint se actualiza algun valor de un usuario ya existente.
+        Tome el ID de un usuario ya existente para modificar cualquiera de sus
+        valores. Solo un administrador puede ejecutar este endpoint.
+      operationId: actualizarUsuario
+      produces:
+        - application/json
+      parameters:
+        - name: idUsuario
+          in: path
+          description: ID del usuario existente
+          required: true
+          type: integer
+          maximum: 10
+          minimum: 1
+          format: int64
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Usuarios'
+      responses:
+        '200':
+          description: Operacion exitosa
+          schema:
+            type: "object"
+            properties:
+              success:
+                type: "string"
+    delete:
+      tags:
+        - usuarios
+      summary: Borrar un usuario existente.
+      description: >-
+        Con este endpoint se eliminara un usuario existente. Solo un
+        administrador puede ejecutar este endpoint.
+      operationId: borrarUsuario
+      produces:
+        - application/json
+      parameters:
+        - name: idUsuario
+          in: path
+          description: ID del usuario existente
+          required: true
+          type: integer
+          minimum: 1
+          format: int64
+      responses:
+        '200':
+          description: Operacion exitosa.
+          schema:
+            type: "object"
+            properties: 
+              success:
+                type: "string"
+            
+  /productos:
+    post:
+      tags:
+        - productos
+      summary: Crear un nuevo producto.
+      description: Con este endpoint se creara un nuevo producto en la base de datos.
+      operationId: crearProducto
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Objeto del producto a crear.
+          required: true
+          schema:
+            type: "object"
+            properties:
+              nombre:
+                type: "string"
+              precio:
+                type: "integer"
+      responses:
+        '200':
+          description: Operacion exitosa.
+        '400':
+          description: Algun valor faltante dentro del body.
+    get:
+      tags:
+        - productos
+      summary: Obtener todos los productos disponibles.
+      description: 'Con este endpoint se obtienen todos los productos disponibles.'
+      operationId: obtenerProductos
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacion exitosa.
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id_productos:
+                  type: "integer"
+                nombre:
+                  type: "string"
+                precio:
+                  type: "integer"
+                createdAt:
+                  type: "string"
+                updatedAt:
+                  type: "string"
+  /productos/{idProducto}:
+    put:
+      tags:
+        - productos
+      summary: Actualizar un producto existente
+      description: 'Con este endpoint se puede actualizar un producto existente. Solo un administrador puede ejecutar este endpoint.'
+      operationId: actualizarProducto
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: idProducto
+          description: ID del producto existente.
+          required: true
+          minimum: 1
+          format: int64
+          type: "integer"
+        - in: body
+          name: body
+          description: Objeto del producto a actualizar.
+          required: true
+          schema:
+            type: "object"
+            properties:
+              nombre: 
+                type: "string"
+              precio:
+                type: "integer"
+      responses:
+        '200':
+          description: Operacion exitosa
+          schema:
+            type: "object"
+            properties:
+              success:
+                type: "string"
+    delete:
+      tags:
+        - productos
+      summary: Borrar un producto existente.
+      description: 'Con este endpoint se elimina un producto. Solo un administrador puede ejecutar este endpoint.'
+      operationId: borrarProducto
+      produces:
+        - application/json
+      parameters:
+        - name: idProducto
+          in: path
+          description: El ID del producto existente
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Operacion exitosa
+          schema:
+            properties:
+              success:
+                type: "string"
+  /login:
+    post:
+      tags:
+      - login
+      parameters:
+        - name: body
+          in: body
+          description: Body con el usuario y contraseña.
+          schema:
+            type: "object"
+            properties:
+              usuario:
+                type: "string"
+              contraseña:
+                type: "string"
+      responses:
+        '200':
+          description: La respuesta devuelve el JSON Web Token.
+          schema:
+            type: "string"
+        '400':
+          description: Bad Request. El usuario o contraseña no esta incluido.
+        '404':
+          description: Not Found. Usuario o contraseña no es correcta.
+securityDefinitions:
+  JSON Web Token:
+    type: apiKey
+    name: user-token
+    in: header
+definitions:
+  Productos:
+    type: object
+    properties:
+      id_productos:
+        type: integer
+        format: int64
+      nombre:
+        type: string
+      precio:
+        type: integer
+        format: int64
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+  Usuarios:
+    type: object
+    properties:
+      id_usuarios:
+        type: integer
+        format: int64
+      usuario:
+        type: string
+      email:
+        type: string
+      contraseña:
+        type: string
+      nombreCompleto:
+        type: string
+      direccion:
+        type: string
+      roles:
+        type: string
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+      Pedidos:
+        type: array
+        items:
+          type: object
+          properties:
+            id_pedidos:
+              type: integer
+              format: int64
+            estado:
+              type: string
+            descripcion:
+              type: string
+            tipoDePago:
+              type: string
+            createdAt:
+              type: string
+            updatedAt:
+              type: string
+            id_usuarios:
+              type: integer
+              format: int64
+    xml:
+      name: Category
+  Pedidos:
+    type: object
+    properties:
+      id_pedidos:
+        type: integer
+        format: int64
+      estado:
+        type: string
+      descripcion:
+        type: string
+      pago:
+        type: integer
+        format: int64
+      tipoDePago:
+        type: string
+      id_usuarios:
+        type: integer
+        format: int64
+      updatedAt:
+        type: string
+      createdAt:
+        type: string
+  producto_pedidos:
+    type: object
+    properties:
+      id_productos:
+        type: integer
+        format: int64
+      id_pedidos:
+        type: integer
+        format: int64
+      createdAt:
+        type: string
+      updatedAt:
+        type: string

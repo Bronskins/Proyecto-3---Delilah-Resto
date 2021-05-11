@@ -59,6 +59,12 @@ router.get('/', checkToken, async (request, response) => {
     
     } else {
         const usuarios = await User.findAll({
+            include: [
+                {
+                    model: Pedidos,
+                    as: "Pedidos"
+                }
+            ],
             where: { id_usuarios: user.id_usuarios}
         })
 
@@ -80,7 +86,7 @@ router.post('/', [
     const errors = validationResult(request);
 
     if (!errors.isEmpty()) {
-        return response.status(404).json({ errores: errors.array() });
+        return response.status(400).json({ errores: errors.array() });
     }
     request.body.contraseña = bcrypt.hashSync(request.body.contraseña, 10);
 

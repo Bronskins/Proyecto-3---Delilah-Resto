@@ -7,7 +7,7 @@ const checkToken = async (request, response, next) => {
     let userToken = request.headers['user-token']
 
     if(!userToken){
-        return response.json(" { error: Falta el token. }")
+        return response.status(400).json(" { error: Falta el token. }")
     }
 
     let payload = {};

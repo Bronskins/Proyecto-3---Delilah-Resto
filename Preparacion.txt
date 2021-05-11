@@ -1,0 +1,55 @@
+PEDIDOS:
+
+* Estado
+* Hora
+* Numero
+* Descripcion 
+* Pago
+* Usuario
+* Direccion
+
+Tabla USUARIOS (Crear Cuenta)
+ 
+* ID -> INT AUTO INCREMENT NOT NULL
+* Usuario -> VARCHAR(255) NOT NULL
+* Nombre Y Apellido VARCHAR(255) NOT NULL
+* Email VARCHAR(255) NOT NULL
+* Telefono INT NOT NULL
+* Direccion VARCHAR(255)
+* Contraseña VARCHAR(255)
+
+-------------------------------------l
+
+USUARIOS:
+
+METODO POST: LOGEARSE              l
+METODO POST: REGISTRARSE           l
+METODO POST: REALIZAR UN PEDIDO    l
+METODO GET: VER PRODUCTOS          l
+METODO GET: VER PRODUCTO POR ID    l
+METODO UPDATE: ACTUALIZAR DATOS    l
+                                   l
+ADMINISTRADORES:                   l
+                                   l
+METODO GET: VER PEDIDOS            l
+METODO DELETE: CANCELAR PEDIDO     l
+METODO UPDATE: ACTUALIZAR PEDIDO   l
+				   l
+-----------------------------------l
+
+Preguntas:
+
+- Que middlewares hay que usar? La pagina no los especifica.
+- Como se setean los distintos ambientes?
+- Como cambio de MariaDB a MySQL como pide el proyecto?
+- Como se arman los archivos de instalacion al finalizar el API?
+- Como seria la logica en los permisos para que los usuarios puedan ver solo informacion propia?
+- Dudas con los diagramas de tablas.
+
+(MySQL - NPM - Node Instalados)
+
+1) Se correrian los archivos SQL (Base De Datos) 
+
+2) NPM Install
+
+3) Nodemon app.js
