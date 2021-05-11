@@ -412,6 +412,8 @@ paths:
     post:
       tags:
       - login
+      summary: Loguearse y recibir el JSON Web Token.
+      description: "Este es el endpoint para autenticar con sus credenciales y recibir el token que le permitira hacer las distintas operaciones CRUD."
       parameters:
         - name: body
           in: body
