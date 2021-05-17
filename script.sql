@@ -34,7 +34,6 @@ create table if not exists pedidos (
 	createdAt datetime not null default CURRENT_TIMESTAMP,
 	updatedAt datetime not null default CURRENT_TIMESTAMP,
 	tipoDePago varchar(255) not null,
-	descripcion varchar(255) not null,
 	pago int(11) not null,
 	id_usuarios int(11) not null
 );
