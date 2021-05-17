@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Pedidos, User, Productos, ProductoPedido } = require('../../conexion')
+const { Pedidos, User, Productos, Detalle } = require('../../conexion')
 const { checkToken, isAdmin} = require('../../middlewares/checkToken')
 const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -39,8 +39,6 @@ router.get('/', checkToken , async (request, response) => {
         where: {usuario: payload.payload.usuario},
         
     })
-
-    console.log(user.roles)
     
     if (user.roles == "admin") {
         const productos = await Pedidos.findAll({ 
@@ -54,9 +52,10 @@ router.get('/', checkToken , async (request, response) => {
                 {
                     model: Productos,
                     as: "Productos",
-                    attributes: { exclude: ["createdAt", "updatedAt"] },
+                    attributes: { exclude: ["createdAt", "updatedAt", "id_productos"] },
                     through: {
-                    attributes: []
+                        model: Detalle,
+                        attributes: { exclude: ["createdAt", "updatedAt", "id_pedidos", "id_productos", "num_detalle"] }
                     }
                 }
             ]
@@ -102,7 +101,6 @@ router.post('/', [
     }
     
     let productos = request.body.id_productos
-    myArray = new Array
     let total = 0
    
 
@@ -111,33 +109,15 @@ router.post('/', [
             where: { id_productos: productos[i] }
         })
         if (!resultado) {
-            console.log("No hay producto con ese ID")
+            return response.status(400).json({ error: `No existe producto con el ID ${productos[i]} `})
         } else {
-
             total = total + resultado.precio
-        
-            if(myArray.includes(`x1 ${resultado.nombre}`)){
-                let valor = myArray.indexOf(`x1 ${resultado.nombre}`)
-                myArray[valor] = `x2 ${resultado.nombre}`
-            } else if (myArray.includes(`x2 ${resultado.nombre}`)){
-                let valor = myArray.indexOf(`x2 ${resultado.nombre}`)
-                myArray[valor] = `x3 ${resultado.nombre}`
-            } else {
-                myArray.push(`x1 ${resultado.nombre}`)
-            }
-
         }
     }
-
-   
-    // DESCRIPCION
-    let descripcion = myArray.toString()
-    console.log(descripcion)
     
     // PRECIO TOTAL
 
     let precioTotal = total
-    console.log(precioTotal)
 
     // ID USUARIO
 
@@ -148,13 +128,11 @@ router.post('/', [
     })
 
     let usuarioId = user.id_usuarios
-    console.log(usuarioId)
 
     let resBody = {
         tipoDePago: request.body.tipoDePago,
         estado: "En preparacion",
         id_usuarios: usuarioId,
-        descripcion: descripcion,
         pago: precioTotal
     }
 
@@ -162,18 +140,45 @@ router.post('/', [
 
     const pedido = await Pedidos.create(resBody);
 
-    
-    // CREACION PEDIDO_PRODUCTO
-    console.log(productos)
-    productos.forEach(async (element) => {
-        let producto = await ProductoPedido.create({
-            id_pedidos: pedido.id_pedidos,
-            id_productos: element
+    // DETALLE
+
+    let aux = 1
+
+    for(i=0;i < productos.length; i++){
+
+        let busqueda = await Detalle.findOne({
+            where: { id_productos: productos[i], id_pedidos: pedido.id_pedidos }
         })
-        console.log(producto)
-    });
 
+        let busquedaProducto = await Productos.findOne({
+            where: { id_productos: productos[i] }
+        })
 
+        if(!busqueda){
+            if (!busquedaProducto) {
+                response.status(400).json({ error: `El producto con el ID ${element} no existe`})
+            } else {
+                let creacion = await Detalle.create({
+                    num_detalle: aux,
+                    id_pedidos: pedido.id_pedidos,
+                    id_productos: productos[i],
+                    cantidad: 1,
+                    precio: busquedaProducto.precio
+                 })
+            }
+        } else {
+
+            let leBody = {
+                cantidad: busqueda.cantidad + 1,
+                precio: busqueda.precio + busquedaProducto.precio
+            }
+            let actualizacion = await Detalle.update(leBody, {
+                where: { id_pedidos: pedido.id_pedidos, id_productos: productos[i] }
+            });
+        }
+        aux++;
+    }
+ 
     response.json(pedido)
 })
 

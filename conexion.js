@@ -4,8 +4,7 @@ const Sequelize = require('sequelize');
 const ProductosModel = require('./models/productos')
 const PedidosModel = require('./models/pedidos')
 const UserModel = require('./models/usuarios');
-const ProductoPedidoModel = require('./models/producto_pedido');
-const usuarios = require('./models/usuarios');
+const DetalleModel = require('./models/detalle')
 
 // Conexion a la base de datos.
 
@@ -19,19 +18,8 @@ const sequelize = new Sequelize("Proyecto3", "root", "acamica",{
 const User = UserModel(sequelize, Sequelize)
 const Productos = ProductosModel(sequelize, Sequelize)
 const Pedidos = PedidosModel(sequelize, Sequelize)
-const ProductoPedido = ProductoPedidoModel(sequelize, Sequelize)
+const Detalle = DetalleModel(sequelize, Sequelize)
 
-Pedidos.belongsToMany(Productos, { 
-    through: ProductoPedido,
-    as: 'Productos',  
-    foreignKey: "id_pedidos"
-});
-
-Productos.belongsToMany(Pedidos, {
-    through: ProductoPedido,
-    as: 'Pedidos',
-    foreignKey: "id_productos"
-})
 
 User.hasMany(Pedidos, {
     as: "Pedidos",
@@ -43,6 +31,30 @@ Pedidos.belongsTo(User, {
     foreignKey: "id_usuarios"
 })
 
+Pedidos.belongsToMany(Productos, {
+    through: Detalle,
+    as: "Productos",
+    foreignKey: "id_pedidos"
+})
+
+Productos.belongsToMany(Pedidos, {
+    through: Detalle,
+    as: "Pedidos",
+    foreignKey: "id_productos"
+}
+)
+
+/* Pedidos.belongsToMany(Productos, { 
+    through: ProductoPedido,
+    as: 'Productos',  
+    foreignKey: "id_pedidos"
+});
+
+Productos.belongsToMany(Pedidos, {
+    through: ProductoPedido,
+    as: 'Pedidos',
+    foreignKey: "id_productos"
+}) */
 
 /* User.associate = function(models){
     User.hasMany(models.Pedidos),
@@ -68,5 +80,5 @@ module.exports = {
     User,
     Productos,
     Pedidos,
-    ProductoPedido
+    Detalle
 }

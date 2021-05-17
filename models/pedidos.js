@@ -16,10 +16,6 @@ module.exports = (sequelize, type) => {
             default: moment.unix(),
             allowNull: false
         },
-        descripcion:  {
-            type: type.STRING(255),
-            allowNull: false
-        },
         pago:{
             type: type.INTEGER,
             allowNull: false

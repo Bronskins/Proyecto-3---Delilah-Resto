@@ -15,9 +15,8 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDk2NzAxfQ.vqPPNxnP-yyagXV68YUgsFnOXaJL1xW-MYmzOjvrnQc",
+								"type": "text"
 							}
 						],
 						"body": {
@@ -62,9 +61,8 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NTAwMDQ2fQ.Fb4pGnAYqVCVTf-EQkAeWAObo_pES0M1MDj__sFodYw",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -90,14 +88,13 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDk2NzAxfQ.vqPPNxnP-yyagXV68YUgsFnOXaJL1xW-MYmzOjvrnQc",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Milanesa completa con papas fritas\",\r\n    \"precio\": 750\r\n}",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Nuggets De Pollo\",\r\n    \"precio\": 450,\r\n    \"descripcion\": \"12 unidades de Nuggets de pollo.\",\r\n    \"createdAt\": \"2000-04-01\",\r\n    \"updatedAt\": \"2000-04-01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,7 +102,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/productos/1",
+							"raw": "http://localhost:3000/api/v1/productos/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -115,7 +112,7 @@
 								"api",
 								"v1",
 								"productos",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -128,9 +125,8 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDk2NzAxfQ.vqPPNxnP-yyagXV68YUgsFnOXaJL1xW-MYmzOjvrnQc",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -162,9 +158,8 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NTQ3MjMzfQ.pA71R77UC1SqTIrqSF6EmJEcfi1MoWtoYT4rx-zYU-s",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -190,13 +185,12 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDY2NTkxfQ.n_YqQwByj24x2LNfdIvcP9M-xafnbSP2jFIcJuCaWkc",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/usuarios/1",
+							"raw": "http://localhost:3000/api/v1/usuarios/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -206,7 +200,7 @@
 								"api",
 								"v1",
 								"usuarios",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -249,17 +243,16 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDk2NzAxfQ.vqPPNxnP-yyagXV68YUgsFnOXaJL1xW-MYmzOjvrnQc",
+								"type": "text"
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": ""
+							"mode": "urlencoded",
+							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/usuarios/1",
+							"raw": "http://localhost:3000/api/v1/usuarios/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -269,7 +262,7 @@
 								"api",
 								"v1",
 								"usuarios",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -282,23 +275,15 @@
 			"item": [
 				{
 					"name": "GET: Ver PEDIDOS",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDY2NTkxfQ.n_YqQwByj24x2LNfdIvcP9M-xafnbSP2jFIcJuCaWkc",
+								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
 						"url": {
 							"raw": "http://localhost:3000/api/v1/pedidos",
 							"protocol": "http",
@@ -322,9 +307,8 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjIwNjcyMTY5fQ.97jYQtMI95gGkBEoWfBvL2sZbyAdRHXSGR8qjjpKgjI",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -351,14 +335,13 @@
 						"header": [
 							{
 								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiQnJvbnNraW5zIiwiaWF0IjoxNjE5NDY2NTkxfQ.n_YqQwByj24x2LNfdIvcP9M-xafnbSP2jFIcJuCaWkc",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"estado\": \"El repartidor esta esperando tu pedido.\",\r\n  \"id_pedidos\": 14\r\n}",
+							"raw": "{\r\n  \"estado\": \"El repartidor esta esperando tu pedido.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -386,17 +369,10 @@
 					"name": "POST: Crear PEDIDO",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "user-token",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"tipoDePago\": \"Efectivo\",\r\n\"id_productos\": [3,2,1]\r\n}",
+							"raw": "{\r\n\"tipoDePago\": \"Efectivo\",\r\n\"estado\": \"En preparacion\",\r\n\"id_productos\": [1,2,3],\r\n\"descripcion\": \"Nuevo pedido.\",\r\n\"pago\": 300\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -434,7 +410,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"usuario\": \"test-user\",\r\n    \"contraseña\": \"test-password\"\r\n}",
+					"raw": "{\r\n    \"usuario\": \"Bronskins\",\r\n    \"contraseña\": \"capo9090\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
